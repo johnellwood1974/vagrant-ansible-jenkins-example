@@ -2,7 +2,7 @@
 
 ## Pre-reqs
 * 2 CPU cores, 1 for each VM
-* RAM
+* 1 GB RAM, 512MB for each VM
 
 ## Installation on Ubuntu
 1. sudo apt-get install vagrant ansible virtualbox
