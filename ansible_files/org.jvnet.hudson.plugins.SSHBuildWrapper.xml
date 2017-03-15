@@ -4,9 +4,9 @@
     <org.jvnet.hudson.plugins.SSHSite>
       <hostname>192.168.10.2</hostname>
       <port>22</port>
-      <username>vagrant</username>
-      <password>blah</password>
-      <keyfile></keyfile>
+      <username>codedeploy</username>
+      <password></password>
+      <keyfile>/var/lib/jenkins/.ssh/id_rsa</keyfile>
       <serverAliveInterval>0</serverAliveInterval>
       <pty>false</pty>
     </org.jvnet.hudson.plugins.SSHSite>
