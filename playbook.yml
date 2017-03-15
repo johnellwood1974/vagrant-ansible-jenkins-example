@@ -1,0 +1,79 @@
+---
+# All Hosts
+- hosts: all
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: ensure ntpd is at the latest version
+      apt: pkg=ntp state=latest
+      become: true
+      notify:
+      - restart ntpd
+    - name: install latest version of git
+      apt: pkg=git state=latest
+      become: true
+  handlers:
+    - name: restart ntpd
+      service: name=ntp state=restarted
+# Jenkins host(s)
+- hosts: jenkinsservers
+  roles:
+    - role: geerlingguy.jenkins
+      become: yes
+      jenkins_plugins: [git,ssh]
+  tasks:
+    - name: generate ssh key for jenkins user
+      user:
+        name: jenkins
+        generate_ssh_key: yes
+        ssh_key_bits: 2048
+        ssh_key_file: .ssh/id_rsa
+      become: true
+    - name: get jenkins user public key
+      fetch:
+        src: /var/lib/jenkins/.ssh/id_rsa.pub
+        fail_on_missing: yes
+        dest: /var/tmp/ansible
+      become: true
+    - name: accept web1 ssh host key
+      shell: ssh-keyscan -H 192.168.10.2 >> /var/lib/jenkins/.ssh/known_hosts
+      become: true
+    - name: set up jenkins ssh site
+      copy:
+        src: /home/john/vagrant/ansible-web-and-jenkins/ansible_files/org.jvnet.hudson.plugins.SSHBuildWrapper.xml
+        dest: /var/lib/jenkins/org.jvnet.hudson.plugins.SSHBuildWrapper.xml
+        #owner: foo
+        #group: foo
+        #mode: 0644
+      become: true
+# Web servers
+- hosts: webservers
+  roles:
+    - role: geerlingguy.apache
+      become: yes
+  tasks:
+    - name: make index.html writable and with v1.0 content
+      file:
+        path: /var/www/html/website
+        state: directory
+        mode: 0777
+      become: true
+    - name: clone website_content git repo
+      git:
+        repo: /var/tmp/website_content
+        dest: /var/www/html/website
+    - name: add codedeploy user with authorized key from Jenkins server
+      become: true
+      user:
+        name: codedeploy
+    - authorized_key:
+        user: codedeploy
+        state: present
+        key: "{{ lookup('file', '/var/tmp/ansible/jenkins/var/lib/jenkins/.ssh/id_rsa.pub') }}"
+      become: true
+
+# DB servers
+- hosts: dbservers
+  roles:
+    - role: geerlingguy.mysql
+      become: yes
