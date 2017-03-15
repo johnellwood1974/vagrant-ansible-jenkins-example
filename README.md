@@ -12,7 +12,7 @@
 5. ansible-galaxy install geerlinguy.apache -p .
 6. vagrant up
 
-## H2 Server access
+## Server access
 * vagrant ssh web1
 * vagrant ssh jenkins
 * http://192.168.10.2
