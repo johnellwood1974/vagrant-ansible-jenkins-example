@@ -17,5 +17,5 @@ Thanks to geerlingguy for the excellent Ansible roles which do all the heavy lif
 ## Server access
 * vagrant ssh web1
 * vagrant ssh jenkins
-* http://192.168.10.2
-* http://192.168.100.2 (admin/jenkins)
+* http://localhost:8012/website
+* http://localhost:8080 (admin/admin)
