@@ -71,9 +71,3 @@
         state: present
         key: "{{ lookup('file', '/var/tmp/ansible/jenkins/var/lib/jenkins/.ssh/id_rsa.pub') }}"
       become: true
-
-# DB servers
-- hosts: dbservers
-  roles:
-    - role: geerlingguy.mysql
-      become: yes
