@@ -14,8 +14,11 @@
 
 Thanks to geerlingguy for the excellent Ansible roles which do all the heavy lifting.
 
-## Server access
+## VM access
 * vagrant ssh web1
 * vagrant ssh jenkins
 * http://localhost:8012/website
 * http://localhost:8080 (admin/admin)
+
+## Cleaning up
+* vagrant destroy -f
