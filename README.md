@@ -20,5 +20,19 @@ Thanks to geerlingguy for the excellent Ansible roles which do all the heavy lif
 * http://localhost:8012/website
 * http://localhost:8080 (admin/admin)
 
+## CD pipeline
+* http://localhost:8080/ ....
+* Check jobs are building every minute without errors
+
+On your local box:
+* cd website_content
+* update index.html
+git add index.html
+git commit -m "Updated index.html"
+
+Wait 1 minute
+Check jenkins job builds and updates content
+Check website has updated: http://localhost:8012/website
+
 ## Cleaning up
 * vagrant destroy -f
