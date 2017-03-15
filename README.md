@@ -12,6 +12,8 @@
 5. ansible-galaxy install geerlinguy.apache -p .
 6. vagrant up
 
+Thanks to geerlingguy for the excellent Ansible roles which do all the heavy lifting.
+
 ## Server access
 * vagrant ssh web1
 * vagrant ssh jenkins
